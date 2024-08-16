@@ -1,7 +1,9 @@
 material {
     name : defaultUnlitTransparency,
     shadingModel : unlit,
+    doubleSided : true,
     blending : transparent,
+    depthWrite : true,
     transparency : twoPassesOneSide,
 
     parameters : [
@@ -25,10 +27,10 @@ fragment {
         prepareMaterial(material);
 
         float4 tex_color = texture(materialParams_albedo, getUV0());
+        material.baseColor.rgb = getColor().rgb * materialParams.baseColor.rgb * tex_color.rgb;
         float combined_alpha = tex_color.a * materialParams.baseColor.a;
-
         // Pre-multiply alpha
-        material.baseColor.rgb = materialParams.baseColor.rgb * getColor().rgb * tex_color.rgb * combined_alpha;
+        material.baseColor.rgb *= combined_alpha;
         material.baseColor.a = combined_alpha;
     }
 }
