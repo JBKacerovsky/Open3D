@@ -3,7 +3,6 @@ material {
     shadingModel : unlit,
     doubleSided : true,
     blending : transparent,
-    depthWrite : true,
     transparency : twoPassesOneSide,
 
     parameters : [
@@ -24,8 +23,13 @@ vertex {
 }
 
 fragment {
+    float sRGB_to_linear(float color) {
+        return color <= 0.04045 ? color / 12.92 : pow((color + 0.055) / 1.055, 2.4);
+    }
+
     void material(inout MaterialInputs material) {
         prepareMaterial(material);
+
 
         float3 linear_color = getColor().rgb;
         // Linearize per vertex color if necessary
@@ -41,6 +45,7 @@ fragment {
         float combined_alpha = tex_color.a * materialParams.baseColor.a;
         // Pre-multiply alpha
         material.baseColor.rgb *= combined_alpha;
+
         material.baseColor.a = combined_alpha;
     }
 }
