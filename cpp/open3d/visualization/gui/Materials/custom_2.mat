@@ -1,0 +1,51 @@
+material {
+    name : defaultUnlitTransparency,
+    shadingModel : unlit,
+    doubleSided : true,
+    blending : transparent,
+    transparency : twoPassesOneSide,
+
+    parameters : [
+        { type : float4,    name : baseColor },
+        { type : float,     name : pointSize },
+        { type : sampler2d, name : albedo },
+        { type : float,     name : srgbColor }
+    ],
+    requires : [
+        color, uv0
+    ]
+}
+
+vertex {
+    void materialVertex(inout MaterialVertexInputs material) {
+        gl_PointSize = materialParams.pointSize;
+    }
+}
+
+fragment {
+    float sRGB_to_linear(float color) {
+        return color <= 0.04045 ? color / 12.92 : pow((color + 0.055) / 1.055, 2.4);
+    }
+
+    void material(inout MaterialInputs material) {
+        prepareMaterial(material);
+
+
+        float3 linear_color = getColor().rgb;
+        // Linearize per vertex color if necessary
+        if (materialParams.srgbColor > 0.0) {
+            linear_color.r = sRGB_to_linear(linear_color.r);
+            linear_color.g = sRGB_to_linear(linear_color.g);
+            linear_color.b = sRGB_to_linear(linear_color.b);
+        }
+
+        float4 tex_color = texture(materialParams_albedo, getUV0());
+        material.baseColor.rgb = materialParams.baseColor.rgb * linear_color * tex_color.rgb;
+
+        float combined_alpha = tex_color.a * materialParams.baseColor.a;
+        // Pre-multiply alpha
+        material.baseColor.rgb *= combined_alpha;
+
+        material.baseColor.a = combined_alpha;
+    }
+}
