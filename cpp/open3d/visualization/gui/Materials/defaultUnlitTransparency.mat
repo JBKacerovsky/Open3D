@@ -9,7 +9,8 @@ material {
     parameters : [
         { type : float4,    name : baseColor },
         { type : float,     name : pointSize },
-        { type : sampler2d, name : albedo }
+        { type : sampler2d, name : albedo },
+        { type : float,     name : srgbColor }
     ],
     requires : [
         color, uv0
