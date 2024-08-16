@@ -26,8 +26,17 @@ fragment {
     void material(inout MaterialInputs material) {
         prepareMaterial(material);
 
+        float3 linear_color = getColor().rgb;
+        // Linearize per vertex color if necessary
+        if (materialParams.srgbColor > 0.0) {
+            linear_color.r = sRGB_to_linear(linear_color.r);
+            linear_color.g = sRGB_to_linear(linear_color.g);
+            linear_color.b = sRGB_to_linear(linear_color.b);
+        }
+
         float4 tex_color = texture(materialParams_albedo, getUV0());
-        material.baseColor.rgb = getColor().rgb * materialParams.baseColor.rgb * tex_color.rgb;
+        material.baseColor.rgb = materialParams.baseColor.rgb * linear_color * tex_color.rgb;
+
         float combined_alpha = tex_color.a * materialParams.baseColor.a;
         // Pre-multiply alpha
         material.baseColor.rgb *= combined_alpha;
