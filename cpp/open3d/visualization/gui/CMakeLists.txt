@@ -98,6 +98,8 @@ open3d_add_compiled_materials(materials
     Materials/unlitLine.mat
     Materials/unlitPolygonOffset.mat
     Materials/unlitSolidColor.mat
+    Materials/custom_1.mat
+    Materials/custom_2.mat
 )
 
 # Source group for Visual Studio

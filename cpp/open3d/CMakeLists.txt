@@ -57,14 +57,14 @@ add_library(Open3D)
 
 add_subdirectory(camera)
 add_subdirectory(core)
-add_subdirectory(data)
+#add_subdirectory(data)
 add_subdirectory(geometry)
 add_subdirectory(io)
-add_subdirectory(ml)
-add_subdirectory(pipelines)
-add_subdirectory(t/geometry)
-add_subdirectory(t/io)
-add_subdirectory(t/pipelines)
+#add_subdirectory(ml)
+#add_subdirectory(pipelines)
+#add_subdirectory(t/geometry)
+#add_subdirectory(t/io)
+#add_subdirectory(t/pipelines)
 add_subdirectory(utility)
 add_subdirectory(visualization)
 
@@ -85,16 +85,16 @@ target_sources(Open3D PRIVATE
 open3d_ispc_target_sources_TARGET_OBJECTS(Open3D PRIVATE
     camera
     core
-    data
+#    data
     geometry
-    tgeometry
-    tgeometry_kernel
+#    tgeometry
+#    tgeometry_kernel
     io
-    tio
-    ml_contrib
-    pipelines
-    tpipelines
-    tpipelines_kernel
+#    tio
+#    ml_contrib
+#    pipelines
+#    tpipelines
+#    tpipelines_kernel
     utility
     visualization
 )
@@ -111,19 +111,19 @@ if (BUILD_WEBRTC)
     )
 endif()
 
-# Source group for Visual Studio
-add_source_group(camera)
-add_source_group(core)
-add_source_group(data)
-add_source_group(geometry)
-add_source_group(tgeometry)
-add_source_group(io)
-add_source_group(tio)
-add_source_group(ml)
-add_source_group(pipelines)
-add_source_group(tpipelines)
-add_source_group(utility)
-add_source_group(visualization)
+## Source group for Visual Studio
+#add_source_group(camera)
+#add_source_group(core)
+#add_source_group(data)
+#add_source_group(geometry)
+#add_source_group(tgeometry)
+#add_source_group(io)
+#add_source_group(tio)
+#add_source_group(ml)
+#add_source_group(pipelines)
+#add_source_group(tpipelines)
+#add_source_group(utility)
+#add_source_group(visualization)
 
 open3d_show_and_abort_on_warning(Open3D)
 open3d_set_global_properties(Open3D)
