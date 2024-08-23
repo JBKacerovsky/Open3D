@@ -92,6 +92,7 @@ std::unordered_map<std::string, MaterialHandle> shader_mappings = {
         {"defaultLitSSR", ResourceManager::kDefaultLitSSR},
         {"defaultUnlitTransparency",
          ResourceManager::kDefaultUnlitWithTransparency},
+        {"alphaMask", ResourceManager::kAlphaMask},
         {"defaultUnlit", ResourceManager::kDefaultUnlit},
         {"normals", ResourceManager::kDefaultNormalShader},
         {"depth", ResourceManager::kDefaultDepthShader},
@@ -1113,6 +1114,8 @@ void FilamentScene::UpdateMaterialProperties(RenderableGeometry& geom) {
     } else if (props.shader == "defaultUnlit" ||
                props.shader == "defaultUnlitTransparency") {
         UpdateDefaultUnlit(geom.mat);
+    } else if(props.shader == "alphaMask"){
+        UpdateDefaultUnlit(geom.mat);
     } else if (props.shader == "normals") {
         UpdateNormalShader(geom.mat);
     } else if (props.shader == "depth") {
@@ -1166,6 +1169,8 @@ void FilamentScene::OverrideMaterialInternal(RenderableGeometry* geom,
             UpdateDefaultLitSSR(geom->mat);
         } else if (material.shader == "defaultUnlit" ||
                    material.shader == "defaultUnlitTransparency") {
+            UpdateDefaultUnlit(geom->mat);
+        } else if (material.shader == "alphaMask") {
             UpdateDefaultUnlit(geom->mat);
         } else if (material.shader == "normals") {
             UpdateNormalShader(geom->mat);

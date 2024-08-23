@@ -54,6 +54,7 @@ public:
     static const MaterialHandle kDefaultLitSSR;
     static const MaterialHandle kDefaultUnlit;
     static const MaterialHandle kDefaultUnlitWithTransparency;
+    static const MaterialHandle kAlphaMask;
     static const MaterialHandle kDefaultNormalShader;
     static const MaterialHandle kDefaultDepthShader;
     static const MaterialHandle kDefaultDepthValueShader;

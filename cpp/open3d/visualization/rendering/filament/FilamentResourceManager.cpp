@@ -326,6 +326,8 @@ const MaterialHandle FilamentResourceManager::kDefaultUnlit =
         MaterialHandle::Next();
 const MaterialHandle FilamentResourceManager::kDefaultUnlitWithTransparency =
         MaterialHandle::Next();
+const MaterialHandle FilamentResourceManager::kAlphaMask =
+        MaterialHandle::Next();
 const MaterialHandle FilamentResourceManager::kDefaultNormalShader =
         MaterialHandle::Next();
 const MaterialHandle FilamentResourceManager::kDefaultDepthShader =
@@ -1090,6 +1092,18 @@ void FilamentResourceManager::LoadDefaults() {
     unlit_trans_mat->setDefaultParameter("albedo", texture, default_sampler);
     materials_[kDefaultUnlitWithTransparency] =
             BoxResource(unlit_trans_mat, engine_);
+
+
+    const auto alpha_mask_path =
+            resource_root + "/alphaMask.filamat";
+    auto alpha_mask_mat = LoadMaterialFromFile(alpha_mask_path, engine_);
+    alpha_mask_mat->setDefaultParameter("baseColor", filament::RgbType::sRGB,
+                                         default_color);
+    alpha_mask_mat->setDefaultParameter("pointSize", 3.f);
+    alpha_mask_mat->setDefaultParameter("albedo", texture, default_sampler);
+    materials_[kAlphaMask] =
+            BoxResource(alpha_mask_mat, engine_);
+
 
     const auto depth_path = resource_root + "/depth.filamat";
     auto depth_mat = LoadMaterialFromFile(depth_path, engine_);
