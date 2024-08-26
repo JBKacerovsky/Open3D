@@ -1,8 +1,8 @@
 material {
-    name : defaultUnlitTransparency,
+    name : alphaMask,
     shadingModel : unlit,
-    doubleSided : true,
-    blending : transparent,
+    doubleSided : false,
+    blending : screen,
     transparency : twoPassesTwoSides,
 
     parameters : [
@@ -43,13 +43,12 @@ fragment {
         material.baseColor.rgb = materialParams.baseColor.rgb * linear_color * tex_color.rgb;
 
         float combined_alpha = tex_color.a * materialParams.baseColor.a;
-        // Pre-multiply alpha
-        // material.baseColor.rgb *= combined_alpha;
-	// material.baseColor.r = 1.0;
+
         material.baseColor.r = combined_alpha;
+
         material.baseColor.g = 0.0;
         material.baseColor.b = 0.0;
 
-	material.baseColor.a = combined_alpha;
+	    material.baseColor.a = combined_alpha;
     }
 }
