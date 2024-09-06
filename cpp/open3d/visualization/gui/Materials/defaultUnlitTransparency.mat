@@ -1,9 +1,9 @@
 material {
     name : defaultUnlitTransparency,
     shadingModel : unlit,
-    doubleSided : true,
+    doubleSided : false,
     blending : transparent,
-    transparency : twoPassesTwoSides,
+    transparency : twoPassesOneSide,
 
     parameters : [
         { type : float4,    name : baseColor },
